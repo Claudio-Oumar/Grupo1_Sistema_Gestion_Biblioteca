@@ -1,0 +1,17 @@
+@startuml
+actor ":Bibliotecario"
+":Bibliotecario" -> ":Main" : iniciarAplicacion()
+":Main" -> ":VentanaPrincipal" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaPrincipal" : configurarBoton()
+":VentanaPrincipal" -> ":VentanaPrincipal" : cargarIconos()
+":VentanaPrincipal" -> ":VentanaPrincipal" : inicializarGestores()
+":VentanaRegistrarUsuario" -> ":VentanaPrincipal" : configurarInteraccion()
+":VentanaPrincipal" -> ":VentanaRegistrarUsuario" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaRegistrarUsuario" : configurarInteraccion()
+":VentanaRegistrarUsuario" -> ":Usuario" : obtenerDatosDelUsuario()
+":Usuario" -> ":GestorDeUsuario" : registrarUsuario()
+":GestorDeUsuario" -> ":Usuario" : getCedula()
+":GestorDeUsuario" -> ":VentanaRegistrarUsuario" : configurarInteraccion()
+":GestorDeUsuario" <- ":Usuario" : obtenerUsuario()
+":GestorDeUsuario" -> ":VentanaRegistrarUsuario" : configurarInteraccion()
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+actor ":Bibliotecario"
+":Bibliotecario" -> ":Main" : iniciarAplicacion()
+":Main" -> ":VentanaPrincipal" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaPrincipal" : configurarBoton()
+":VentanaPrincipal" -> ":VentanaPrincipal" : cargarIconos()
+":VentanaPrincipal" -> ":VentanaPrincipal" : inicializarGestores()
+":VentanaAsignarMulta" -> ":VentanaPrincipal" : configurarInteraccion()
+":VentanaPrincipal" -> ":VentanaAsignarMulta" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaAsignarMulta" : configurarInteraccion()
+":VentanaAsignarMulta" -> ":Multa" : ingresarDatosDeMulta()
+":Multa" -> ":VentanaAsignarMulta" : configurarInteraccion()
+":GestorDeMulta" -> ":Multa" : obtenerDatosDeMulta()
+":Multa" -> ":GestorDeMulta" : agregarNuevaMulta()
+":Multa" -> ":GestorDeMulta" : verificarEstadoDelLibro()
+":GestorDeMulta" -> ":VentanaAsignarMulta" : configurarInteraccion()
+":Usuario" -> ":GestorDeMulta" : cobrarPorLibro()
+":GestorDeMulta" -> ":VentanaAsignarMulta" : configurarInteraccion()
+":Multa" -> ":GestorDeMulta" : verificarFechaLimite()
+":GestorDeMulta" -> ":VentanaAsignarMulta" : configurarInteraccion()
+":Usuario" -> ":GestorDeMulta" : aplicarMultaPorFecha()
+":GestorDeMulta" -> ":VentanaAsignarMulta" : configurarInteraccion()
+
+@enduml

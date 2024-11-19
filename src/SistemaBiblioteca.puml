@@ -1,0 +1,80 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class CuentaEstudiante {
+-String codigoUnico
+-String nombre
+-String apellido
+-boolean estaRegistrado
++registrar(): void
++retirarLibro(Libro:libro): void
++devolverLibro(Libro:libro): void
+}
+
+class Libro {
+-String ISBN
+-String título
+-String tipo
+-String editorial
+-String edicion
+-int anio
+-String estado
+-List <Autor> autores
++actualizarEstado(String: nuevoEstado): void
++obtenerDisponibilidad(): boolean
+}
+
+class Autor {
+-String nombre
+-String nacionalidad
+-String fechaNacimiento
++obtenerInformacionDeAutor(): String
+}
+
+class Prestamo {
+-String idPrestamo
+-String fechaInicioPrestamo
+-String fechaFinPrestamo
+-String estado
++verificarEstadoPrestamo(): String
+}
+
+class GestorPrestamo{
+-List <Libro> libros
+-List <CuentaEstudiante> cuentas
+-List <Prestamo> préstamos
++crearPrestamo(CuentaEstudiante: cuenta, Libro: libro): void
++verificarVencimientoPrestamo(): void
++verificarMulta(CuentaEstudiante: estudiante): void
++obtenerPrestamosDeEstudiante(CuentaEstudiante: estudiante): List<Prestamo>
++verificarDisponibilidadLibro(Libro: libro): boolean
+}
+class SAEW{
+-List <CuentaEstudiante> cuentas
++verificarCodigoUnico(CuentaEstudiante: estudiante): boolean
+}
+class Devolucion{
+-String idDevolucion
+-String fechaDevolucion
+-Prestamo prestamo
+}
+class GestorDevolucion{
+-List <Devolucion> devoluciones
++registrarDevolucion(Prestamo: prestamo): void
+}
+class CopiaLibros{
+-String idCopia
+-String estado
++actualizarEstado(String: nuevoEstado): void
++ObtenerEstado(String: nuevoEstado): void
++obteneridCopia(): void
+}
+CuentaEstudiante "1" --> "1...6" Prestamo
+Prestamo "*" --> "1...5" Libro
+Prestamo "1" --> "1" Devolucion
+Libro "1" --> "1...*" Autor
+Libro "1" <|-- "1...5" CopiaLibros
+GestorPrestamo "1" --> "1...*" Prestamo
+GestorDevolucion "1" --> "1...*" Devolucion
+SAEW "1" --> "1...*" CuentaEstudiante
+@enduml

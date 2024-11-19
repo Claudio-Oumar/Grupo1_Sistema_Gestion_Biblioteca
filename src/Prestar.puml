@@ -1,0 +1,22 @@
+@startuml
+actor ":Bibliotecario"
+":Bibliotecario" -> ":Main" : iniciarAplicacion()
+":Main" -> ":VentanaPrincipal" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaPrincipal" : configurarBoton()
+":VentanaPrincipal" -> ":VentanaPrincipal" : cargarIconos()
+":VentanaPrincipal" -> ":VentanaPrincipal" : inicializarGestores()
+":VentanaPrestarLibro" -> ":VentanaPrincipal" : configurarInteraccion()
+":VentanaPrincipal" -> ":VentanaPrestarLibro" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaPrestarLibro" : configurarInteraccion()
+
+":VentanaPrestarLibro" -> ":Prestamo" : ingresarDatosDePrestamo()
+":VentanaPrestarLibro" -> ":GestorDeInventario" : consultarDisponibilidad()
+":GestorDeInventario" -> ":Prestamo" : obtenerDatosDePrestamo()
+":Prestamo" -> ":GestorDePrestamos" : agregarPrestamo()
+":GestorDePrestamos" -> ":VentanaPrestarLibro" : configurarInteraccion()
+":GestorDePrestamos" <- ":GestorDeInventario" : actualizarInventarioPostPrestamo()
+":GestorDePrestamos" -> ":VentanaPrestarLibro" : configurarInteraccion()
+":Bibliotecario" -> ":GestorDePrestamos" : finalizarPrestamo()
+":GestorDePrestamos" -> ":VentanaPrestarLibro" : configurarInteraccion()
+
+@enduml

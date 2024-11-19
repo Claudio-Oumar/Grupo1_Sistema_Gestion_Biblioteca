@@ -1,0 +1,23 @@
+@startuml
+actor ":Bibliotecario"
+
+":Bibliotecario" -> ":Main" : iniciarAplicacion()
+":Main" -> ":VentanaPrincipal" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaPrincipal" : configurarBoton()
+":VentanaPrincipal" -> ":VentanaPrincipal" : cargarIconos()
+":VentanaPrincipal" -> ":VentanaPrincipal" : inicializarGestores()
+":VentanaDevolverLibro" -> ":VentanaPrincipal" : configurarInteraccion()
+":VentanaPrincipal" -> ":VentanaDevolverLibro" : inicializarVentana()
+":VentanaPrincipal" -> ":VentanaDevolverLibro" : configurarInteraccion()
+
+":VentanaDevolverLibro" -> ":Devolucion" : ingresarDatosDeDevolucion()
+":Devolucion" -> ":VentanaDevolverLibro" : configurarInteraccion()
+":GestorDeInventario" -> ":Devolucion" : obtenerDatosDeDevolucion()
+":Devolucion" -> ":GestorDeDevoluciones" : agregarDevolucion()
+":GestorDeDevoluciones" -> ":VentanaDevolverLibro" : configurarInteraccion()
+":GestorDeDevoluciones" <- ":GestorDeInventario" : actualizarInventarioPostDevolucion()
+":GestorDeDevoluciones" -> ":VentanaDevolverLibro" : configurarInteraccion()
+":Bibliotecario" -> ":GestorDeDevoluciones" : finalizarDevolucion()
+":GestorDeDevoluciones" -> ":VentanaDevolverLibro" : configurarInteraccion()
+
+@enduml

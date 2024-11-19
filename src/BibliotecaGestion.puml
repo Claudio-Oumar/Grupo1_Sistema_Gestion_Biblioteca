@@ -1,0 +1,224 @@
+@startuml
+
+class Multa{
+    -Usuario usuario
+    -double valorDeMulta
+    -String tipoDeMulta
+    +getUsuario(): Usuario
+}
+
+
+class GestorDeMulta{
+    -List<Multa> multas
+    -GestorDeUsuario usuarios
+    +agregarNuevaMulta(): void
+}
+class Usuario{
+    -String nombre
+    -String apellido
+    -String cedula
+    -int edad
+    -String direccion
+    -boolean tieneMulta
+    +tieneMulta(): boolean
+    +getCedula(): String
+    +obtenerDatosDelUsuario(): String
+    +setTieneMulta(boolean tieneMulta): void
+}
+class GestorDeUsuario{
+    -List<CuentaUsuario> usuarios
+    +registrarUsuario(Usuario usuario): void
+    +obtenerUsuario(String cedula): Usuario
+}
+
+class VentanaPrincipal{
+    -GestorDeUsuario gestorDeUsuario
+    - GestorDeInventario gestorDeInventario
+    - GestorDePrestamos gestorDePrestamos
+    - GestorDeDevoluciones gestorDeDevoluciones
+    - GestorDeMulta gestorDeMulta
+    +inicializarGestores(): void
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+    +configurarBoton(): void
+    +cargarIconos(): void
+}
+
+class Libro {
+    -String titulo
+    -String autor
+    -String editorial
+    -String genero
+    -String idioma
+    -String fechaDePublicacion
+    -String isbn
+    -boolean disponible
+    +obtenerDatosDelLibro(): String
+    +isDisponible(): boolean
+    +setDisponible(boolean disponible): void
+    +getISBN(): String
+}
+
+class GestorDeInventario {
+    -List <Libro> libros
+    +agregarLibro(Libro libro): void
+    +buscarLibroPorISBN(String isbn): Libro
+    +consultarDisponibilidad(Libro libro): boolean
+    +actualizarInventario(Libro libro, boolean disponibilidad): void
+    +obtenerLibros(): List<Libro>
+}
+
+class Prestamo {
+    -Libro libro
+    -Date fechaDePrestamo
+    -Date fechaLimiteDelPrestamo
+    -String identificadorDelPrestamo
+    -String estado
+    -Usuario usuario
+    +getLibro(): Libro
+    +getUsuario(): Usuario
+    +getEstado(): String
+    +getObtenerDatosDePrestamo(): String
+    +getIdentidicadorDelPrestamo(): String
+    +getFechaLimiteDelPrestamo(): Date
+    +finalizarPrestamo(): void
+}
+
+class GestorDePrestamos {
+    -List<Prestamo> prestamos
+    -GestorDeInventario gestorDeInventario
+    -GestorDeUsuario gestorDeUsuario
+    +agregarPrestamo(String isbn, String cedulaUsuario): void
+    +obtenerPrestamoActivo(String isbn): Prestamo
+}
+class Devolucion {
+    -Libro libro
+    -Date fechaDeDevolucion
+    -String identificadorDeDevolucion
+    -String estado
+    -Usuario usuario
+    -boolean buenEstado
+    +getLibro(): Libro
+    +getIdentificadorDeDevolucion(): String
+}
+
+class GestorDeDevoluciones {
+    -List<Devolucion> devoluciones
+    -GestorDeInventario gestorDeInventario
+    -GestorDeUsuario gestorDeUsuario
+    -GestorDePrestamos gestorDePrestamos
+    +agregarDevolucion(String isbn, String cedulaUsuario, boolean buenEstado): void
+
+}
+
+class VentanaRegistrarUsuario {
+    - JTextField txtNombre
+    - JTextField txtApellido
+    - JTextField txtCedula
+    - JTextField txtEdad
+    - JTextField txtDireccion
+    - GestorDeUsuario gestorDeUsuario
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+}
+class VentanaRegistrarLibro {
+    - JTextField txtTitulo
+    - JTextField txtAutor
+    - JTextField txtEditorial
+    - JTextField txtGenero
+    - JTextField txtIdioma
+    - JTextField txtFechaDePublicacion
+    - JTextField txtIsbn
+    - GestorDeInventario gestorDeInventario
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+}
+class VentanaPrestarLibro {
+    - JTextField txtIsbn
+    - JTextField txtCedula
+    - JButton btnPrestar
+    - JTextArea areaInventario
+    - GestorDeInventario gestorDeInventario
+    - GestorDeUsuario gestorDeUsuario
+    - GestorDePrestamos gestorDePrestamos
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+}
+class VentanaDevolverLibro {
+    - JTextField txtISBN;
+    - JTextField txtCedulaUsuario
+    - JLabel lblFechaLimite
+    - JRadioButton rbBuenEstadoSi
+    - JRadioButton rbBuenEstadoNo
+    - JSpinner fechaDevolucionSpinner;
+    - JButton btnRecuperarFechaLimite;
+    - JButton btnDevolver;
+    -GestorDePrestamos gestorDePrestamos
+    - GestorDeUsuario gestorDeUsuario
+    -GestorDeMulta gestorDeMulta
+    - GestorDeDevoluciones gestorDeDevoluciones
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+}
+class VentanaAsignarMulta {
+    - JTextField txtCedula
+    - JTextField txtValor
+    - JTextField txtTipo
+    - GestorDeMulta gestorDeMulta
+    - GestorDeUsuario gestorDeUsuario
+    +inicializarVentana(): void
+    +configurarInteraccion(): void
+}
+
+
+VentanaRegistrarUsuario "1" -u- "1" GestorDeUsuario
+
+VentanaDevolverLibro "1" -u- "1" GestorDePrestamos
+
+VentanaDevolverLibro "1" -u- "1" GestorDeUsuario
+
+VentanaDevolverLibro "1" -u- "1" GestorDeMulta
+
+VentanaDevolverLibro "1" -u- "1" GestorDeDevoluciones
+
+VentanaRegistrarLibro "1" -u- "1" GestorDeInventario
+
+VentanaPrestarLibro "1" -u- "1" GestorDePrestamos
+
+VentanaPrestarLibro "1" -u- "1" GestorDeUsuario
+
+VentanaPrestarLibro "1" -u- "1" GestorDeInventario
+
+VentanaAsignarMulta "1" -u- "1" GestorDeMulta
+
+VentanaAsignarMulta "1" -u- "1" GestorDeUsuario
+
+GestorDeInventario "1" -u- "1" VentanaPrincipal
+
+VentanaPrincipal "1" -u- "1" GestorDeDevoluciones
+
+GestorDeDevoluciones "1" -u- "1...*" Devolucion
+GestorDeDevoluciones "1" -u- "1" GestorDeInventario
+GestorDeDevoluciones "1" -u- "1" GestorDeUsuario
+GestorDeDevoluciones "1" -u- "1" GestorDePrestamos
+
+VentanaPrincipal "1" -u- "1" GestorDeUsuario
+
+GestorDeUsuario "1" -u- "1...*" Usuario
+
+VentanaPrincipal "1" -u- "1" GestorDeMulta
+
+GestorDeMulta "1" -u- "1...*" Multa
+
+GestorDeMulta "1" -u- "1" GestorDeUsuario
+
+VentanaPrincipal "1" -u- "1" GestorDePrestamos
+
+GestorDePrestamos "1" -u- "1...*" Prestamo
+GestorDePrestamos "1" -u- "1" GestorDeInventario
+GestorDePrestamos "1" -u- "1" GestorDeUsuario
+
+GestorDeInventario "1" -u- "1...*" Libro
+
+
+@enduml
